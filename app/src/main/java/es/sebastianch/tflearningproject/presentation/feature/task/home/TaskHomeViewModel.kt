@@ -1,29 +1,40 @@
 package es.sebastianch.tflearningproject.presentation.feature.task.home
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import es.sebastianch.tflearningproject.presentation.feature.task.home.state.TaskHomeState
-import es.sebastianch.tflearningproject.presentation.feature.task.home.state.InitUserEvents
+import es.sebastianch.tflearningproject.presentation.feature.task.home.state.TaskHomeUIEvents
+import es.sebastianch.tflearningproject.presentation.feature.task.home.state.TaskHomeUserEvents
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TaskHomeViewModel @Inject constructor() : ViewModel(){
 
-    private val _screenState: MutableState<TaskHomeState> = mutableStateOf(TaskHomeState())
-    val screenState: State<TaskHomeState>
-        get() = _screenState
+    private val _screenState: MutableStateFlow<TaskHomeState> by lazy { MutableStateFlow(TaskHomeState()) }
+    val screenState: StateFlow<TaskHomeState> = _screenState
 
-    fun onEvent(event: InitUserEvents) {
+    private val _uiEvents: MutableSharedFlow<TaskHomeUIEvents> = MutableSharedFlow()
+    val uiEvents: SharedFlow<TaskHomeUIEvents>
+        get() = _uiEvents.asSharedFlow()
+
+    fun onEvent(event: TaskHomeUserEvents) {
         when(event){
-            is InitUserEvents.OnMessageTextChanged -> {reloadStateWithMessage(event.messageText)}
-            is InitUserEvents.OnSendMessageClicked -> openDialogMessage()
-            InitUserEvents.OnCloseDialogClicked -> closeDialogMessage()
+            is TaskHomeUserEvents.OnMessageTextChanged -> reloadStateWithMessage(event.messageText)
+            is TaskHomeUserEvents.OnSendMessageClicked -> openDialogMessage()
+            TaskHomeUserEvents.OnCloseDialogClicked -> closeDialogMessage()
+            TaskHomeUserEvents.OnLoading -> loadData()
         }
+    }
+
+    private fun loadData() {
+        //TODO
     }
 
     private fun reloadStateWithMessage(messageText: String) {
@@ -52,5 +63,11 @@ class TaskHomeViewModel @Inject constructor() : ViewModel(){
 
     private fun emitState(state: TaskHomeState.() -> TaskHomeState) {
         _screenState.value = state.invoke(screenState.value)
+    }
+
+    private fun emitEvent(event: TaskHomeUIEvents){
+        viewModelScope.launch {
+            _uiEvents.emit(event)
+        }
     }
 }

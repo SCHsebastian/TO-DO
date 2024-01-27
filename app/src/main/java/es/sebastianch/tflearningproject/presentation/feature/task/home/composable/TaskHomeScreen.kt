@@ -6,39 +6,38 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import es.sebastianch.tflearningproject.R
-import es.sebastianch.tflearningproject.todo.ui.theme.TFLearningProjectTheme
+import es.sebastianch.tflearningproject.presentation.feature.task.home.TaskHomeViewModel
 import es.sebastianch.tflearningproject.presentation.feature.task.home.state.TaskHomeState
-import es.sebastianch.tflearningproject.presentation.feature.task.home.state.InitUserEvents
+import es.sebastianch.tflearningproject.presentation.feature.task.home.state.TaskHomeUserEvents
+import es.sebastianch.tflearningproject.todo.ui.theme.TFLearningProjectTheme
 
 @Composable
-fun InitScreen(
-    state: TaskHomeState,
-    onEvent: (InitUserEvents) -> Unit = {}
+fun TaskHomeScreen(
+    viewModel: TaskHomeViewModel,
+    navController: NavController
 ) {
-    TFLearningProjectTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            Greeting(
-                onSendMessageClick = { onEvent(InitUserEvents.OnSendMessageClicked) },
-                onTextEdited = { onEvent(InitUserEvents.OnMessageTextChanged(it))},
-                onCloseDialog = { onEvent(InitUserEvents.OnCloseDialogClicked)},
-                state = state
-            )
-        }
+
+    LaunchedEffect(Unit){
+        viewModel.onEvent(TaskHomeUserEvents.OnLoading)
     }
+
+    Greeting(
+        onSendMessageClick = { viewModel.onEvent(TaskHomeUserEvents.OnSendMessageClicked) },
+        onTextEdited = { viewModel.onEvent(TaskHomeUserEvents.OnMessageTextChanged(it))},
+        onCloseDialog = { viewModel.onEvent(TaskHomeUserEvents.OnCloseDialogClicked)},
+        state = viewModel.screenState.collectAsState().value
+    )
 }
 
 @Composable
