@@ -1,8 +1,10 @@
 package es.sebastianch.tflearningproject.common.types
 
-enum class PriorityType {
-    HIGH,
-    MEDIUM,
-    LOW,
-    NONE
+import androidx.compose.ui.graphics.Color
+
+enum class PriorityType(val color: Color) {
+    HIGH(Color.Red),
+    MEDIUM(Color.Yellow),
+    LOW(Color.Green),
+    NONE(Color.White)
 }
