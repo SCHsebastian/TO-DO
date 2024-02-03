@@ -11,6 +11,9 @@
       <entry key="check">
         <State />
       </entry>
+      <entry key="prev">
+        <State />
+      </entry>
     </value>
   </component>
 </project>

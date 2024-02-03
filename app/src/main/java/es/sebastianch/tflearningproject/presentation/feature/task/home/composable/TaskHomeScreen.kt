@@ -1,10 +1,19 @@
 package es.sebastianch.tflearningproject.presentation.feature.task.home.composable
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import es.sebastianch.tflearningproject.common.types.PriorityType
+import es.sebastianch.tflearningproject.domain.features.task.model.Task
 import es.sebastianch.tflearningproject.presentation.feature.task.home.TaskHomeViewModel
 import es.sebastianch.tflearningproject.presentation.feature.task.home.state.TaskHomeUIEvents
 import es.sebastianch.tflearningproject.presentation.feature.task.home.state.TaskHomeUserEvents
@@ -20,7 +29,9 @@ fun TaskHomeScreen(
         ListScreen(
             onCreateNewTaskFABClick = {viewModel.onEvent(TaskHomeUserEvents.OnCreateNewTaskFABClick(taskId = -1))},
             {},
-            {})
+            {},
+            taskList = it.value.taskList
+        )
     }
 
     LaunchedEffect(Unit){
@@ -40,11 +51,20 @@ fun TaskHomeScreen(
 fun ListScreen(
     onCreateNewTaskFABClick: () -> Unit,
     onTaskEditButtonClick: () -> Unit,
-    onTaskDeleteButtonClick: () -> Unit
+    onTaskDeleteButtonClick: () -> Unit,
+    taskList: List<Task>
 ) {
     Scaffold (
         content = {
-                  it.calculateBottomPadding()
+            LazyColumn(
+                modifier = Modifier.padding(it),
+                contentPadding = PaddingValues(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ){
+               items(items = taskList, itemContent = {task ->
+                   TaskListItem(title = task.title, description = task.description, priorityType = task.priority)
+               })
+           }
         },
         floatingActionButton = {
             TaskHomeFAB(onCreateNewTaskFABClick)
@@ -58,8 +78,38 @@ fun ListScreen(
 @Preview
 @Composable
 fun check(){
+    val taskList = listOf(
+        Task(0, "Titulo", description = "descripcion", priority = PriorityType.LOW),
+        Task(1, "Titulo", description = "descripcion", priority = PriorityType.MEDIUM),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
+        Task(3, "Titulo", description = "descripcion", priority = PriorityType.NONE),
+        Task(4, "Titulo", description = "descripcion", priority = PriorityType.LOW),
+        Task(5, "Titulo", description = "descripcion", priority = PriorityType.LOW),
+        Task(6, "Titulo", description = "descripcion", priority = PriorityType.LOW),
+    )
     TFLearningProjectTheme {
-        ListScreen(onCreateNewTaskFABClick = { /*TODO*/ }, onTaskEditButtonClick = { /*TODO*/ }) {
-        }
+        ListScreen(onCreateNewTaskFABClick = {},
+            onTaskEditButtonClick = {},
+            {},
+            taskList
+        )
     }
 }

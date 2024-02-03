@@ -62,6 +62,20 @@ fun SortItem(
             onDismissRequest = { expanded = false }
         ) {
             DropdownMenuItem(
+                text = { PriorityItem(priorityType = PriorityType.HIGH)},
+                onClick = {
+                    expanded = false
+                onSortAction.invoke()
+                }
+            )
+            DropdownMenuItem(
+                text = { PriorityItem(priorityType = PriorityType.MEDIUM)},
+                onClick = {
+                    expanded = false
+                onSortAction.invoke()
+                }
+            )
+            DropdownMenuItem(
                 text = {
                     PriorityItem(priorityType = PriorityType.LOW)
                        },
@@ -70,6 +84,16 @@ fun SortItem(
                     onSortAction.invoke()
                 }
             )
+            DropdownMenuItem(
+                text = {
+                    PriorityItem(priorityType = PriorityType.NONE)
+                       },
+                onClick = {
+                    expanded = false
+                    onSortAction.invoke()
+                }
+            )
+
         }
     }
 }
