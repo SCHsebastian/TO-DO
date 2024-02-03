@@ -3,43 +3,23 @@ package es.sebastianch.tflearningproject.todo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import es.sebastianch.tflearningproject.presentation.common.navigation.NavRoutes
-import es.sebastianch.tflearningproject.presentation.feature.task.home.composable.TaskHomeScreen
+import es.sebastianch.tflearningproject.presentation.common.navigation.SetupNavigation
 import es.sebastianch.tflearningproject.todo.ui.theme.TFLearningProjectTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity(){
 
+    private lateinit var navHostController: NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             TFLearningProjectTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    val navController = rememberNavController()
-                    App(navController)
-                }
+                navHostController = rememberNavController()
+                SetupNavigation(navHostController = navHostController)
             }
         }
     }
-
-    @Composable
-    fun App(navController: NavHostController) {
-        NavHost(navController = navController, startDestination = NavRoutes.Task.Home.route){
-            composable(NavRoutes.Task.Home.route){
-                TaskHomeScreen(hiltViewModel(), navController)
-            }
-        }
-    }
-
 }

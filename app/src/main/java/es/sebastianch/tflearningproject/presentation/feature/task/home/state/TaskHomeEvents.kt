@@ -1,14 +1,14 @@
 package es.sebastianch.tflearningproject.presentation.feature.task.home.state
 
-sealed class TaskHomeUIEvents{
+import es.sebastianch.tflearningproject.presentation.common.MVIEventType
+
+sealed class TaskHomeUIEvents : MVIEventType.UI{
     data object Loading : TaskHomeUIEvents()
-    data class Render(val state: TaskHomeState) : TaskHomeUIEvents()
+    data class OpenScreenNewTask(val taskId: Long) : TaskHomeUIEvents()
 }
 
-sealed class TaskHomeUserEvents{
+sealed class TaskHomeUserEvents: MVIEventType.User{
 
     data object OnLoading : TaskHomeUserEvents()
-    data object OnSendMessageClicked : TaskHomeUserEvents()
-    data object OnCloseDialogClicked : TaskHomeUserEvents()
-    data class OnMessageTextChanged(val messageText: String) : TaskHomeUserEvents()
+    data class OnCreateNewTaskFABClick(val taskId: Long) : TaskHomeUserEvents()
 }

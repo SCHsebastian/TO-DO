@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import es.sebastianch.tflearningproject.domain.common.UseCase
 import es.sebastianch.tflearningproject.domain.features.task.repository.TaskRepository
 import es.sebastianch.tflearningproject.domain.features.task.usecase.GetAllTaskUseCase
+import es.sebastianch.tflearningproject.domain.features.task.usecase.GetTaskListByPriority
 import kotlinx.coroutines.Dispatchers
 
 @Module
@@ -22,5 +23,11 @@ object UseCaseModule {
         configuration: UseCase.Configuration,
         repository: TaskRepository
     ) = GetAllTaskUseCase(configuration, repository)
+
+    @Provides
+    fun providesGetTaskListByPriority(
+        configuration: UseCase.Configuration,
+        repository: TaskRepository
+    ) = GetTaskListByPriority(configuration, repository)
 
 }

@@ -1,10 +1,7 @@
 package es.sebastianch.tflearningproject.presentation.feature.task.home.state
 
-import es.sebastianch.tflearningproject.presentation.common.utils.Empty
+import es.sebastianch.tflearningproject.domain.features.task.model.Task
 
 data class TaskHomeState (
-    val message: String = String.Empty,
-    val showMessage: Boolean = false
-){
-
-}
+    val taskList: List<Task> = listOf()
+)
