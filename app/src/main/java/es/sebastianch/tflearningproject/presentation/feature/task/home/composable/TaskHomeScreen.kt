@@ -70,7 +70,7 @@ fun ListScreen(
             TaskHomeFAB(onCreateNewTaskFABClick)
         },
         topBar = {
-            TaskHomeTopBar()
+            TaskHomeTopBar({},{})
         }
     )
 }
