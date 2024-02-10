@@ -8,7 +8,7 @@ interface TaskLocalDataSource {
 
     fun getTask(id: Int): Flow<Task>
 
-    suspend fun deleteTask(task: Task)
+    fun deleteTask(task: Task): Flow<Boolean>
 
-    suspend fun upsertTask(task: Task)
+    fun upsertTask(task: Task): Flow<Long>
 }

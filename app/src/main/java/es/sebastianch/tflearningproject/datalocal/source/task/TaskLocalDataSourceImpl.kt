@@ -6,6 +6,7 @@ import es.sebastianch.tflearningproject.datalocal.db.task.toEntity
 import es.sebastianch.tflearningproject.datarepository.task.datasource.TaskLocalDataSource
 import es.sebastianch.tflearningproject.domain.features.task.model.Task
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -21,8 +22,13 @@ class TaskLocalDataSourceImpl @Inject constructor(
 
     override fun getTask(id: Int): Flow<Task> = taskDao.getTask(id).map { it.toDomain() }
 
-    override suspend fun deleteTask(task: Task) = taskDao.deleteTask(task.toEntity())
+    override fun deleteTask(task: Task) = flow {
+        taskDao.deleteTask(task.toEntity())
+        emit(true)
+    }
 
-    override suspend fun upsertTask(task: Task) = taskDao.upsertTask(task.toEntity())
+    override fun upsertTask(task: Task) = flow {
+        emit(taskDao.upsertTask(task.toEntity()))
+    }
 
 }

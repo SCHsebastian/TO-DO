@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import es.sebastianch.tflearningproject.common.types.PriorityType
 import es.sebastianch.tflearningproject.presentation.common.compose.items.PrioritySimpleItem
 
@@ -88,7 +89,7 @@ fun TaskListItem(
                     modifier = Modifier.weight(1f, true),
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Text(text = title, maxLines = 2)
+                    Text(text = title, maxLines = 2, fontSize = 16.sp)
                     Spacer(modifier = Modifier.width(6.dp))
                     PrioritySimpleItem(priorityType = priorityType)
                 }

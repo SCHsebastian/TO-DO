@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import es.sebastianch.tflearningproject.presentation.common.navigation.TASK_SCREEN
 import es.sebastianch.tflearningproject.presentation.common.navigation.TASK_SCREEN_ID
+import es.sebastianch.tflearningproject.presentation.feature.task.item.TaskEditScreen
 
 fun NavGraphBuilder.taskComposable(
     navigateToListScreen: (TaskAction) -> Unit
@@ -16,6 +17,6 @@ fun NavGraphBuilder.taskComposable(
             type = NavType.LongType
         })
     ){
-
+        TaskEditScreen(taskId = it.arguments!!.getLong(TASK_SCREEN_ID, -1), backNavigation = navigateToListScreen)
     }
 }

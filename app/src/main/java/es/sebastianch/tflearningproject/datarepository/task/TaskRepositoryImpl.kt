@@ -15,15 +15,11 @@ class TaskRepositoryImpl(
     override fun getTask(id: Int): Flow<Task> = taskLocalDataSource.getTask(id)
 
 
-    override suspend fun deleteTask(task: Task) {
+    override fun deleteTask(task: Task) {
         taskLocalDataSource.deleteTask(task)
     }
 
-    override suspend fun insertTask(task: Task){
-        taskLocalDataSource.upsertTask(task)
-    }
-
-    override suspend fun updateTask(task: Task){
+    override fun upsertTask(task: Task) {
         taskLocalDataSource.upsertTask(task)
     }
 

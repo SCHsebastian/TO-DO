@@ -19,6 +19,6 @@ interface TaskDao {
     suspend fun deleteTask(task: TaskEntity)
 
     @Upsert
-    suspend fun upsertTask(task: TaskEntity)
+    suspend fun upsertTask(task: TaskEntity): Long
 
 }
