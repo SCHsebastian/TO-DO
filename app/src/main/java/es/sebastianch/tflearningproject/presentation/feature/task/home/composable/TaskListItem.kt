@@ -32,8 +32,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import es.sebastianch.tflearningproject.common.types.PriorityType
-import es.sebastianch.tflearningproject.presentation.common.compose.items.PrioritySimpleItem
+import es.sebastianch.tflearningproject.presentation.feature.task.vo.PrioritySimpleItem
+import es.sebastianch.tflearningproject.presentation.feature.task.vo.PriorityVO
 
 /*
 * +----------------------------+
@@ -51,7 +51,7 @@ import es.sebastianch.tflearningproject.presentation.common.compose.items.Priori
 fun TaskListItem(
     title: String,
     description: String,
-    priorityType: PriorityType
+    priority: PriorityVO
 ) {
     var isCompleted by remember { mutableStateOf(false) }
     var isExpanded by remember { mutableStateOf(false) }
@@ -91,7 +91,7 @@ fun TaskListItem(
                 ){
                     Text(text = title, maxLines = 2, fontSize = 16.sp)
                     Spacer(modifier = Modifier.width(6.dp))
-                    PrioritySimpleItem(priorityType = priorityType)
+                    PrioritySimpleItem(priorityType = priority)
                 }
                 Checkbox(
                     checked = isCompleted,
@@ -129,7 +129,7 @@ fun prev(){
                     "Descripción es súper chulo porque Mari lo dice..." +
                     "Descripción es súper chulo porque Mari lo dice..." +
                     "Descripción es súper chulo porque Mari lo dice...",
-            priorityType = PriorityType.LOW
+            priority = PriorityVO(0,Color.Red)
         )
     }
 

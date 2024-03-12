@@ -3,9 +3,12 @@ package es.sebastianch.tflearningproject.presentation.feature.task.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import es.sebastianch.tflearningproject.domain.features.task.model.Priority
 import es.sebastianch.tflearningproject.domain.features.task.model.Task
 import es.sebastianch.tflearningproject.domain.features.task.usecase.GetAllTaskUseCase
 import es.sebastianch.tflearningproject.domain.features.task.usecase.GetTaskListByPriority
+import es.sebastianch.tflearningproject.presentation.feature.task.vo.PriorityDecorator
+import es.sebastianch.tflearningproject.presentation.feature.task.vo.PriorityVO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -14,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskHomeViewModel @Inject constructor(
     private val getAllTaskUseCase: GetAllTaskUseCase,
-    private val getTaskListByPriority: GetTaskListByPriority
+    private val getTaskListByPriority: GetTaskListByPriority,
+    private val priorityDecorator: PriorityDecorator
 ) : ViewModel(){
 
     private val _screenState: MutableStateFlow<State> by lazy { MutableStateFlow(State.Idle) }
@@ -49,6 +53,9 @@ class TaskHomeViewModel @Inject constructor(
                 }
         }
     }
+
+    fun getPriorityUI(priority: Priority): PriorityVO = priorityDecorator.applyStyle(priority)
+
 
     sealed interface State {
         data object Idle : State

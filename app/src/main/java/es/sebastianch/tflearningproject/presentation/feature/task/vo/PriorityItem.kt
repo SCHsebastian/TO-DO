@@ -1,4 +1,4 @@
-package es.sebastianch.tflearningproject.presentation.common.compose.items
+package es.sebastianch.tflearningproject.presentation.feature.task.vo
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -25,10 +25,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import es.sebastianch.tflearningproject.R
-import es.sebastianch.tflearningproject.common.types.PriorityType
 
 @Composable
-fun PriorityItem(priorityType: PriorityType) {
+fun PriorityItem(priorityType: PriorityVO) {
     Row (
         verticalAlignment = Alignment.CenterVertically
     ){
@@ -36,12 +35,12 @@ fun PriorityItem(priorityType: PriorityType) {
             drawCircle(color = priorityType.color)
         }
         Spacer(modifier = Modifier.size(4.dp))
-        Text(text = priorityType.name)
+        Text(text = stringResource(id = priorityType.title))
     }
 }
 
 @Composable
-fun PrioritySimpleItem(priorityType: PriorityType) {
+fun PrioritySimpleItem(priorityType: PriorityVO) {
     Canvas(modifier = Modifier.size(16.dp)){
         drawCircle(color = priorityType.color)
     }
@@ -49,8 +48,8 @@ fun PrioritySimpleItem(priorityType: PriorityType) {
 
 @Composable
 fun PriorityTypeDropDownMenu(
-    priorityTypeList: List<PriorityType>,
-    onItemAction: (PriorityType) -> Unit,
+    priorityTypeList: List<PriorityVO>,
+    onItemAction: (PriorityVO) -> Unit,
 ){
     var expanded by remember{ mutableStateOf(false) }
 
@@ -65,7 +64,7 @@ fun PriorityTypeDropDownMenu(
         ) {
             priorityTypeList.forEach{
                 DropdownMenuItem(
-                    text = {PriorityItem(it)},
+                    text = { PriorityItem(it) },
                     onClick = { onItemAction.invoke(it) })
             }
         }
@@ -75,14 +74,14 @@ fun PriorityTypeDropDownMenu(
 @Preview
 @Composable
 fun prev(){
-    val priorityType = PriorityType.MEDIUM
+    val priorityVO = PriorityVO(0, Color.Yellow)
 
     Column(
         modifier = Modifier.background(color = Color.White),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        PriorityItem(priorityType = priorityType)
+        PriorityItem(priorityType = priorityVO)
         Spacer(modifier = Modifier.height(16.dp))
-        PrioritySimpleItem(priorityType = priorityType)
+        PrioritySimpleItem(priorityType = priorityVO)
     }
 }

@@ -5,4 +5,8 @@
     <string name="search_item">search</string>
     <string name="search_default_value">Search…</string>
     <string name="sort_item">sort</string>
+    <string name="high_priority">high</string>
+    <string name="medium_priority">medium</string>
+    <string name="low_priority">low</string>
+    <string name="none_priority">none</string>
 </resources>

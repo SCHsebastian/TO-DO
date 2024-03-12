@@ -13,8 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import es.sebastianch.tflearningproject.common.types.PriorityType
-import es.sebastianch.tflearningproject.domain.features.task.model.Task
 import es.sebastianch.tflearningproject.presentation.feature.task.home.composable.TaskHomeFAB
 import es.sebastianch.tflearningproject.presentation.feature.task.home.composable.TaskHomeTopBar
 import es.sebastianch.tflearningproject.presentation.feature.task.home.composable.TaskListItem
@@ -46,7 +44,8 @@ fun TaskHomeScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ){
                 items(items = taskListState.list, itemContent = {task ->
-                    TaskListItem(title = task.title, description = task.description, priorityType = task.priority)
+                    val priorityUI = viewModel.getPriorityUI(task.priority)
+                    TaskListItem(title = task.title, description = task.description, priority = priorityUI)
                 })
             }
         },
@@ -62,33 +61,6 @@ fun TaskHomeScreen(
 @Preview
 @Composable
 fun check(){
-    val taskList = listOf(
-        Task(0, "Titulo", description = "descripcion", priority = PriorityType.LOW),
-        Task(1, "Titulo", description = "descripcion", priority = PriorityType.MEDIUM),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(2, "Titulo", description = "descripcion", priority = PriorityType.HIGH),
-        Task(3, "Titulo", description = "descripcion", priority = PriorityType.NONE),
-        Task(4, "Titulo", description = "descripcion", priority = PriorityType.LOW),
-        Task(5, "Titulo", description = "descripcion", priority = PriorityType.LOW),
-        Task(6, "Titulo", description = "descripcion", priority = PriorityType.LOW),
-    )
     TFLearningProjectTheme {
         TaskHomeScreen{}
     }

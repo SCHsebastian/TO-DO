@@ -20,7 +20,7 @@ class TaskLocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override fun getTask(id: Int): Flow<Task> = taskDao.getTask(id).map { it.toDomain() }
+    override fun getTask(id: Long): Flow<Task> = taskDao.getTask(id).map { it.toDomain() }
 
     override fun deleteTask(task: Task) = flow {
         taskDao.deleteTask(task.toEntity())

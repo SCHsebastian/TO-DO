@@ -12,7 +12,7 @@ class TaskRepositoryImpl(
 
     override fun getAllTask(): Flow<List<Task>> = taskLocalDataSource.getAllTask()
 
-    override fun getTask(id: Int): Flow<Task> = taskLocalDataSource.getTask(id)
+    override fun getTask(id: Long): Flow<Task> = taskLocalDataSource.getTask(id)
 
 
     override fun deleteTask(task: Task) {

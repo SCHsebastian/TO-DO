@@ -11,9 +11,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import es.sebastianch.tflearningproject.R
-import es.sebastianch.tflearningproject.common.types.PriorityType
-import es.sebastianch.tflearningproject.presentation.common.compose.items.PriorityTypeDropDownMenu
+import es.sebastianch.tflearningproject.domain.features.task.model.Priority
 import es.sebastianch.tflearningproject.presentation.common.compose.search.SearchIconButton
+import es.sebastianch.tflearningproject.presentation.feature.task.vo.PriorityDecorator
+import es.sebastianch.tflearningproject.presentation.feature.task.vo.PriorityTypeDropDownMenu
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,11 +22,11 @@ fun TaskHomeTopBar(
     onQueryChange: (String)-> Unit,
     onSearch: (String)-> Unit
 ) {
-    val priorityTypeList = listOf(
-        PriorityType.HIGH,
-        PriorityType.MEDIUM,
-        PriorityType.LOW,
-        PriorityType.NONE
+    val priorityList = listOf(
+        Priority.HIGH,
+        Priority.MEDIUM,
+        Priority.LOW,
+        Priority.NONE
     )
 
     var isSearching by remember { mutableStateOf(false) }
@@ -37,7 +38,7 @@ fun TaskHomeTopBar(
             },
             actions = {
                 SearchIconButton { isSearching = true }
-                PriorityTypeDropDownMenu(priorityTypeList,{})
+                PriorityTypeDropDownMenu(priorityList.map { PriorityDecorator().applyStyle(it) },{})
             }
         )
     }else {

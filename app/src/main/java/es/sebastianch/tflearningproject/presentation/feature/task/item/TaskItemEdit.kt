@@ -26,11 +26,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import es.sebastianch.tflearningproject.common.types.PriorityType
-import es.sebastianch.tflearningproject.presentation.common.compose.items.PriorityItem
-import es.sebastianch.tflearningproject.presentation.common.compose.items.PrioritySimpleItem
 import es.sebastianch.tflearningproject.presentation.common.navigation.task.TaskAction
-import es.sebastianch.tflearningproject.presentation.feature.task.vo.TaskVO
+import es.sebastianch.tflearningproject.presentation.feature.task.home.TaskHomeViewModel
+import es.sebastianch.tflearningproject.presentation.feature.task.vo.PriorityItem
+import es.sebastianch.tflearningproject.presentation.feature.task.vo.PrioritySimpleItem
+import es.sebastianch.tflearningproject.presentation.feature.task.vo.PriorityVO
 import es.sebastianch.tflearningproject.todo.ui.theme.TFLearningProjectTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,9 +42,17 @@ fun TaskEditScreen(
 ) {
 
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
-    val taskItem = TaskVO("Title Sample","Description Sample",PriorityType.HIGH)
+
+    when (screenState){
+        TaskItemViewModel.State.Idle -> TODO()
+        TaskItemViewModel.State.Loading -> TODO()
+        is TaskItemViewModel.State.Success -> {
+
+        }
+    }
+
     var taskDescriptionModifiable by remember { mutableStateOf(taskItem.description) }
-    var taskPriorityModifiable by remember { mutableStateOf(taskItem.priorityType) }
+    var taskPriorityModifiable by remember { mutableStateOf(taskItem.priority) }
     var dropDownExpanded by remember { mutableStateOf(false) }
     Scaffold (
         topBar = {
@@ -57,12 +65,12 @@ fun TaskEditScreen(
                     Box(
                         modifier = Modifier.clickable { /*Open */ }
                     ){
-                        PrioritySimpleItem(priorityType = taskItem.priorityType)
+                        PrioritySimpleItem(priorityType = taskItem.priority)
                         DropdownMenu(
                             expanded = dropDownExpanded,
                             onDismissRequest = { dropDownExpanded = false }
                         ) {
-                            listOf<PriorityType>().forEach{
+                            listOf<PriorityVO>().forEach{
                                 DropdownMenuItem(
                                     text = { PriorityItem(it) },
                                     onClick = { taskPriorityModifiable = it })

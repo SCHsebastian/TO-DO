@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface TaskLocalDataSource {
     fun getAllTask(): Flow<List<Task>>
 
-    fun getTask(id: Int): Flow<Task>
+    fun getTask(id: Long): Flow<Task>
 
     fun deleteTask(task: Task): Flow<Boolean>
 
